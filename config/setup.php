@@ -1,47 +1,47 @@
 <?php
 
 try {
-	$dbh = new PDO('mysql:host='.$config['db_host'], $config['db_user'], $config['db_pwd']);
-	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD, $DB_OPTIONS);
 } catch (PDOException $e) {
 	echo 'Connexion échouée :' . $e->getMessage();
 	die();
 }
 
-$sql = 'CREATE DATABASE ' . $config['db_name'];
+$sql = 'CREATE DATABASE ' . $DB_NAME;
 try {
 	$dbh->query($sql);
 } catch (PDOException $e) {
-	echo 'Le création de la base ' . $config['db_name'] . ' à echouée<br />';
+	echo 'Le création de la base ' . $DB_NAME . ' à echouée: ' . $e->getMessage();
 	die();
 }
 
 echo "Base de donnée créée<br />";
-$sql = 'USE ' . $config['db_name'];
+$sql = 'USE ' . $DB_NAME;
 try {
 	$dbh->query($sql);
 } catch (PDOException $e) {
-	echo 'Impossible de rejoindre ' . $config['db_name'] . ' : ' . $e->getMessage();
+	echo 'Impossible de rejoindre ' . $DB_NAME . ' : ' . $e->getMessage();
 	die();
 }
 
-echo "Maintenant sur " . $config['db_name'] . '<br />';
+echo "Maintenant sur " . $DB_NAME . '<br />';
 $sql = 'CREATE TABLE users (
 			id INT PRIMARY KEY AUTO_INCREMENT,
 			fname VARCHAR(255),
 			lname VARCHAR(255),
 			login VARCHAR(255),
 			pwd VARCHAR(255),
-			email VARCHAR(255));
+			email VARCHAR(255),
+			valid VARCHAR(255));
 		CREATE TABLE images (
 			id INT PRIMARY AUTO_INCREMENT,
 			type VARCHR(10),
 			name VARCHAR(255),
-			path VARCHAR(255);
+			path VARCHAR(255));
 		CREATE TABLE usr_img (
 			id INT PRIMARY AUTO_INCREMENT,
 			id_usr INT,
-			id_IMG);';
+			id_IMG));';
 try {
 	$dbh->query($sql);
 } catch (PDOException $e) {
@@ -52,9 +52,8 @@ try {
 echo "Table users créée<br />";
 $user = 'root';
 $pwd = hash('whirlpool', 'root');
-$sql = sprintf("INSERT INTO users (fname, lname, login, pwd)
-				VALUES ('Jules', 'Barbier', '%s', '%s')", $user, $pwd);
-echo $sql;
+$sql = sprintf("INSERT INTO users (fname, lname, login, pwd, valid)
+				VALUES ('Jules', 'Barbier', '%s', '%s', 'yes')", $user, $pwd);
 try {
 	$dbh->query($sql);
 } catch(PDOException $e) {
@@ -62,7 +61,7 @@ try {
 	die();
 }
 echo "Ajout de l'administrateur dans la base: <br />Login: root<br />Mot de passe: root<br />";
-echo "Redirection vers la page d'accueil dans 5 sec...<br />";
-unlink('.firstime');
+echo "Redirection vers la page d'accueil<br />";
+unlink('config/.firstime');
 $dbh = NULL;
 sleep(5);

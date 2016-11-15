@@ -3,15 +3,15 @@
 <head>
 	<meta charset="utf-8">
 	<title>Camagru</title>
-	<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css" />
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="/camagru/assets/css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="/camagru/assets/css/style.css" />
 </head>
 
 <body>
 
 <nav>
 	<ul>
-		<li id="logout"><a href="disconnect"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+		<li id="logout"><a href="/camagru/login/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
 	</ul>
 </nav>
 

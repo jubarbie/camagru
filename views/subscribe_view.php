@@ -3,13 +3,13 @@
 <head>
 	<meta charset="utf-8">
 	<title>Camagru - Inscription</title>
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css?<?=time()?>">
+	<link rel="stylesheet" type="text/css" href="/camagru/assets/css/style.css?<?=time()?>">
 </head>
 
 <body>
 	<div class="container">
 		<?= ($alert) ? '<div class="alert alert-'.$alert['type'].'">'.$alert['msg'].'</div>':''?>
-		<form id="login" action="subscribe" method="post">
+		<form id="login" action="/camagru/login/subscribe" method="post">
 			<h1>Inscription</h1>
 			<label for="login">Login</label>
 			<input type="text" id="login" name="login" value="<?=$login ? $login : ""?>" />
@@ -23,7 +23,7 @@
 			<input type="text" id="email" name="email" value="<?=$email ? $email : ""?>"/>
 			<input type="submit" name="submit" value="S'inscrire" />
 		</form>
-		<div class="align-center">Déjà inscrit ? <a href="login">Se connecter</a></div>
+		<div class="align-center">Déjà inscrit ? <a href="/camagru/login">Se connecter</a></div>
 	</div>
 </body>
 </html>

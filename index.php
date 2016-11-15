@@ -1,44 +1,41 @@
 <?php
 session_start();
 
-include("config.php");
-if (file_exists('.firstime'))
-	include("install.php");
+include("config/database.php");
+include("config/config.php");
+if (file_exists('config/.firstime'))
+	include("config/setup.php");
 
+// inclusion de toutes les controlers
+foreach (glob("controlers/*.php") as $filename)
+	include_once $filename;
 
+// check de l'url pour appeler la bonne fonction dans la bonne classe
 $url = explode('/', $_SERVER[REQUEST_URI]);
 if (!$url[2] || $url[2] == "index.php")
-	include("controlers/home.php");
+{
+	$home->index();
+}
 else
 {
-	$file = "controlers/" . $url[2] . ".php";
-	if (!file_exists($file))
+	if (!class_exists($url[2]))
 	{
 		header("HTTP/1.1 404 Not Found");
 		exit;
 	}
 	else
-		include ($file);
-}
-/*
-else if (!$_SESSION['connect'])
-{
-	include("controlers/login.php");
-}
-else
-{
-	$url = explode('/', $_SERVER[REQUEST_URI]);
-	if (!$url[2] || $url[2] == "index.php")
-		include("controlers/home.php");
-	else
 	{
-		$file = "controlers/" . $url[2] . ".php";
-		if (!file_exists($file))
+		if ($url[3])
 		{
-			header("HTTP/1.1 404 Not Found");
-			exit;
+			if (method_exists($url[2], $url[3]))
+				call_user_func(array($url[2], $url[3]), $url[4]);
+			else
+			{
+				header("HTTP/1.1 404 Not Found");
+				exit;
+			}
 		}
 		else
-			include ($file);
+			call_user_func(array($url[2], 'index'));
 	}
-}*/
+}
