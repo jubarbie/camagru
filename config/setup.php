@@ -7,7 +7,9 @@ try {
 	die();
 }
 
-$sql = 'CREATE DATABASE ' . $DB_NAME;
+$sql = '
+	DROP DATABASE IF EXISTS db_camagru;
+	CREATE DATABASE IF NOT EXISTS ' . $DB_NAME;
 try {
 	$dbh->query($sql);
 } catch (PDOException $e) {
@@ -34,14 +36,13 @@ $sql = 'CREATE TABLE users (
 			email VARCHAR(255),
 			valid VARCHAR(255));
 		CREATE TABLE images (
-			id INT PRIMARY AUTO_INCREMENT,
-			type VARCHR(10),
+			id INT PRIMARY KEY AUTO_INCREMENT,
+			type VARCHAR(10),
 			name VARCHAR(255),
-			path VARCHAR(255));
-		CREATE TABLE usr_img (
-			id INT PRIMARY AUTO_INCREMENT,
-			id_usr INT,
-			id_IMG));';
+			path VARCHAR(255),
+			id_user INT,
+			date_ajout DATETIME,
+			comment VARCHAR(255));';
 try {
 	$dbh->query($sql);
 } catch (PDOException $e) {
@@ -52,8 +53,9 @@ try {
 echo "Table users créée<br />";
 $user = 'root';
 $pwd = hash('whirlpool', 'root');
-$sql = sprintf("INSERT INTO users (fname, lname, login, pwd, valid)
-				VALUES ('Jules', 'Barbier', '%s', '%s', 'yes')", $user, $pwd);
+$email = 'jubarbie@student.42.fr';
+$sql = sprintf("INSERT INTO users (fname, lname, login, email, pwd, valid)
+				VALUES ('Jules', 'Barbier', '%s', '%s', '%s', 'yes')", $user, $email, $pwd);
 try {
 	$dbh->query($sql);
 } catch(PDOException $e) {

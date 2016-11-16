@@ -27,22 +27,25 @@ li {
 	text-align: center;
 }
 
-form#login {
+form {
 	display: block;
 	max-width: 450px;
-	margin: 100px auto 0;
+	margin: 0 auto;
 	border-radius: 3px;
 	border: 1px solid grey;
 	padding: 10px;
 	box-sizing: border-box;
 }
-form#login input {
+form input {
 	display: block;
 	width: 100%;
 	height: 30px;
 	margin-bottom: 8px;
 	box-sizing: border-box;
 	border-radius: 2px;
+}
+form#login {
+	margin-top: 100px;
 }
 
 .alert {
@@ -76,4 +79,23 @@ nav li a {
 nav li#logout {
 	position: absolute;
 	right: 10px;
+}
+
+#galery {
+	color: white;
+	margin: 0 auto;;
+	background: black;
+	text-align: center;
+}
+#galery ul {
+	display: inline-block;
+	text-align: left;
+}
+#galery li {
+	width: 30%;
+	margin: 3px;
+}
+.gal-img {
+	border-radius: 5px;
+	width: 100%;
 }

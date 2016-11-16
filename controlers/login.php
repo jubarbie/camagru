@@ -140,8 +140,8 @@ Class Login
 		if ($_SESSION['connect'])
 		{
 			session_destroy();
-			Login::index();
 		}
+		header('Location: /camagru/login');
 	}	
 }
 global $login;

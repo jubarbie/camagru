@@ -15,6 +15,8 @@ Class Users_model
 		if ($result && $result[0]['pwd'] == hash('whirlpool', $pwd))
 		{
 			$_SESSION['connect'] = 'yes';
+			$_SESSION['id'] = $result[0]['id'];
+			$_SESSION['login'] = $result[0]['login'];
 			$_SESSION['lname'] = $result[0]['lname'];
 			$_SESSION['fname'] = $result[0]['fname'];
 			$_SESSION['valid'] = $result[0]['valid'];
@@ -51,6 +53,24 @@ Class Users_model
 			return (FALSE);
 	}
 
+	function update_infos($id, $email, $lname, $fname)
+	{
+		require('config/db_connect.php');
+		$key = uniqid();
+		$sql = "UPDATE db_camagru.users SET lname = :lname, fname = :fname, email = :email WHERE id = :id";
+		try {
+			$query = $pdo->prepare($sql);
+			$result = $query->execute(array(
+				'id' => $id,
+				'lname' => $lname,
+				'fname' => $fname,
+				'email' => $email));
+		} catch (PDOException $e) {
+			echo "Problème dans la requête: " . $e->getMessage();
+		}
+		return ($result);
+	}
+
 	function get_user_by_login($login)
 	{
 		require_once('config/db_connect.php');
@@ -63,7 +83,7 @@ Class Users_model
 				echo "Problème dans la requête: " . $e->getMessage();
 		}
 		return ($result);
-	}
+	}	
 }
 
 global $users_model;
