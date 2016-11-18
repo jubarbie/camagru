@@ -6,7 +6,13 @@ Class Galery
 	{
 		require_once('models/galery_model.php');
 		global $galery_model;
+		global $base_url;
 
+		if (!$_SESSION['connect'])
+		{
+			Login::index();
+			exit;
+		}
 		$img_pp = 9;
 		$images = $galery_model->get_all_images();
 		include ('views/header.php');
@@ -18,7 +24,13 @@ Class Galery
 	{
 		require_once('models/galery_model.php');
 		global $galery_model;
+		global $base_url;
 
+		if (!$_SESSION['connect'])
+		{
+			Login::index();
+			exit;
+		}
 		$img_pp = 9;
 		$total = $galery_model->get_num_images();
 		$nb_pages = ceil($total/$img_pp);
@@ -41,7 +53,13 @@ Class Galery
 	{
 		require_once('models/galery_model.php');
 		global $galery_model;
+		global $base_url;
 
+		if (!$_SESSION['connect'])
+		{
+			Login::index();
+			exit;
+		}
 		$img = $_POST['img'];
 		$name = uniqid();
 		$url = 'upload/'.$name.'.png';
@@ -52,9 +70,26 @@ Class Galery
 			$data = base64_decode($img);
 			file_put_contents($url, $data);
 			if ($galery_model->add_image($name, 'png', $url, $_SESSION['id']))
-				echo $url;
+			{
+				$src = imagecreatefrompng('assets/img/glasses.png');
+				$dst = imagecreatefrompng($url);
+				
+				$src_width = imagesx($src);
+				$src_height = imagesy($src);
+				$dst_width = imagesx($dst);
+				$dst_height = imagesy($dst);
+
+				$dst_x = $dst_width - $src_width;
+				$dst_y =  $dst_height - $src_height;
+
+				// On met le logo (source) dans l'image de destination (la photo)
+				imagecopy($dst, $src, $_POST['x'], $_POST['y'], 0, 0, $src_width, $src_height);
+
+				// On affiche l'image de destination qui a été fusionnée avec le logo
+				imagepng($dst, $url);
+			}
 			else
-				echo $url;
+				echo FALSE;
 		}
 	}
 }

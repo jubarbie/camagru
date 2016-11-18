@@ -10,7 +10,6 @@ body {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	background: white;
 	padding: 0px;
 	margin: 0;
 	box-sizing: border-box;
@@ -62,6 +61,7 @@ form#login {
 
 .container {
 	max-width: 1270px;
+	background: #011936;
 	margin: 0 auto;
 	padding: 0;
 	box-sizing: border-box;

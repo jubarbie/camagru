@@ -1,8 +1,8 @@
 <?php
 session_start();
-
+global $base_url;
+$base_url = '/'.basename(__DIR__).'/';
 include("config/database.php");
-include("config/config.php");
 if (file_exists('config/.firstime'))
 	include("config/setup.php");
 

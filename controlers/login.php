@@ -75,6 +75,7 @@ Class Login
 	public function subscribe()
 	{
 		global $users_model;
+		global $base_url;
 
 		if (!$_POST['submit'])
 			include('views/subscribe_view.php');
