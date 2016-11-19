@@ -11,9 +11,37 @@ Class Galery_model
 				'type' => $type,
 				'name' => $name,
 				'path' => $path,
-				'id_user' => $id_user));
+				'id_user' => $user_id));
 		} catch (PDOException $e) {
 			echo "Problème dans la requête: " . $e->getMessage();
+		}
+		return ($result);
+	}
+
+	function delete_image($id)
+	{
+		require('config/db_connect.php');
+		$sql = "DELETE FROM images WHERE id=:id";
+		try {
+			$query = $pdo->prepare($sql);
+			$result = $query->execute(array('id' => $id));
+		} catch (PDOException $e) {
+			echo "Problème dans la requête: " . $e->getMessage();
+		}
+		return ($result);
+	}
+
+	function get_image($id)
+	{
+		require('config/db_connect.php');
+		$sql = "SELECT * FROM images WHERE id=:id";
+		try {
+			$query = $pdo->prepare($sql);
+			$query->execute(array('id' => $id));
+			$result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+		} catch (PDOException $e) {
+				echo "Problème dans la requête: " . $e->getMessage();
 		}
 		return ($result);
 	}
@@ -49,6 +77,22 @@ Class Galery_model
 		}
 		return ($result);
 	}
+
+	function get_images_from_user($id_user, $limit = NULL)
+	{
+		require('config/db_connect.php');
+		$sql = "SELECT * FROM images WHERE id_user = :id_user ORDER BY date_ajout DESC LIMIT 10 ";
+		try {
+			$query = $pdo->prepare($sql);
+			$query->execute(array('id_user' => $id_user));
+			$result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+		} catch (PDOException $e) {
+				echo "Problème dans la requête: " . $e->getMessage();
+		}
+		return ($result);
+	}
+
 	
 	function get_images_pag($first, $offset)
 	{

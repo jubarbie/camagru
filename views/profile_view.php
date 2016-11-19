@@ -1,6 +1,6 @@
 <div class="container">
 	<h1>Ton profil</h1>
-	<form id="login" action="/camagru/user" method="post">
+	<form id="login" action="<?=$base_url?>user" method="post">
 		<label for="lname">Nom</label>
 		<input type="text" value="<?=$lname?>" name="lname" id="lname" />
 		<label for="fname">Prénom</label>

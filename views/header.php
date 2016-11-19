@@ -4,7 +4,8 @@
 	<meta charset="utf-8">
 	<title>Camagru</title>
 	<link rel="stylesheet" type="text/css" href="<?=$base_url?>assets/css/font-awesome.min.css" />
-	<link rel="stylesheet" type="text/css" href="<?=$base_url?>assets/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="<?=$base_url?>assets/css/style.css?<?=time()?>" />
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 	
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>

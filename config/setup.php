@@ -41,8 +41,13 @@ $sql = 'CREATE TABLE users (
 			name VARCHAR(255),
 			path VARCHAR(255),
 			id_user INT,
-			date_ajout DATETIME,
-			comment VARCHAR(255));';
+			date_ajout DATETIME);
+		CREATE TABLE comments (
+			id INT PRIMARY KEY AUTO_INCREMENT,
+			id_img INT,
+			id_user INT,
+			text VARCHAR(255),
+			date_ajout DATETIME);';
 try {
 	$dbh->query($sql);
 } catch (PDOException $e) {

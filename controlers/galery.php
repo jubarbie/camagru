@@ -20,6 +20,29 @@ Class Galery
 		include ('views/footer.php');
 	}
 
+	public function photo($id = NULL)
+	{
+		require_once('models/galery_model.php');
+		global $galery_model;
+		global $base_url;
+
+		if (!$_SESSION['connect'])
+		{
+			Login::index();
+			exit;
+		}
+		if ($id == NULL || !($image = $galery_model->get_image($id)))
+			Galery::index();
+		else
+		{
+			$image = $image[0];
+			$galery = $galery_model->get_all_images();
+			include ('views/header.php');
+			include ('views/image_view.php');
+			include ('views/footer.php');
+		}
+	}
+
 	public function page($page = 1)
 	{
 		require_once('models/galery_model.php');
@@ -71,7 +94,7 @@ Class Galery
 			file_put_contents($url, $data);
 			if ($galery_model->add_image($name, 'png', $url, $_SESSION['id']))
 			{
-				$src = imagecreatefrompng('assets/img/glasses.png');
+				$src = imagecreatefrompng('assets/img/stickers/glasses.png');
 				$dst = imagecreatefrompng($url);
 				
 				$src_width = imagesx($src);
@@ -87,6 +110,7 @@ Class Galery
 
 				// On affiche l'image de destination qui a été fusionnée avec le logo
 				imagepng($dst, $url);
+				echo $base_url.$url;
 			}
 			else
 				echo FALSE;
