@@ -52,7 +52,7 @@ navigator.getMedia({ video: { mandatory: { maxWidth: 640, maxHeight: 480 } } }, 
 	console.log("Failed!", e);
 });
 
-$('#click').on('click', function() {
+$("#click").on('click', function() {
 	var ctx = canvas.getContext("2d").drawImage(video, 0, 0, 640, 480);
 	var data = canvas.toDataURL('image/png');
 	//alert(data);

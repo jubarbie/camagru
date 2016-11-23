@@ -10,8 +10,8 @@ Class Login
 	public function index() 
 	{
 		global $users_model;
-		global $URL;
-		
+		global $base_url;
+
 		if (!$_POST['submit'] || !$_POST['login'] || !$_POST['pwd'])
 			include('views/login_view.php');
 		else
@@ -23,11 +23,7 @@ Class Login
 			{
 				$alert['type'] = 'success';
 				$alert['msg'] = 'Connection réussie';
-				header('Location: /camagru/home');
-				//Home::index();
-				//include('views/header.php');
-				//include('views/home_view.php');
-				//include('views/footer.php');
+				header('Location: '.$base_url.'home');
 			}
 			else
 			{
@@ -48,6 +44,8 @@ Class Login
 
 	public function send_confirm_email($email, $id, $key)
 	{
+		global $base_url;
+		
 		$to = $email;
 		$subject = 'Camagru - Validez votre inscription';
 		$message = '
@@ -60,7 +58,7 @@ Class Login
 			<p>Merci de cliquer sur le lien suivant afin de valider votre inscription</p>
 			<a href="localhost:8080/camagru/validation/'.$key.'/'.$id.'">Je valide mon inscription</a>
 			<p>Ou copiez ce lien dans votre navigateur:</p>
-			<p>localhost:8080/camagru/validation/'.$key.'/'.$id.'">Je valide mon inscription</p>
+			<p>localhost:8080'.$base_url.'login/validation/?key='.$key.'&id='.$id.'</p>
 			</body>
 			</html>
 			';
@@ -70,6 +68,38 @@ Class Login
 		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
 		mail($to, $subject, $message, $headers);
+	}
+
+	public function validation()
+	{
+		global $users_model;
+		
+		if (isset($_GET['key']) && isset($_GET['id']))
+		{
+			if ($user = $users_model->get_user_by_id($_GET['id']))
+			{
+				if ($user['valid'] != 'yes' && $user['valid'] == $_GET['key'])
+				{
+					$users_model->valid_user($_GET['id']);
+					Login::index();
+				}
+				else
+				{
+					header("HTTP/1.0 404 Not Found");
+					exit();
+				}
+			}
+			else
+			{
+				header("HTTP/1.0 404 Not Found");
+				exit();
+			}
+		}
+		else
+		{
+			header("HTTP/1.0 404 Not Found");
+			exit();
+		}
 	}
 
 	public function subscribe()
@@ -131,7 +161,6 @@ Class Login
 				}
 				else
 					include('views/subscribe_view.php');
-
 			}
 		}
 	}

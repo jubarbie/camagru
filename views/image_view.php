@@ -3,8 +3,8 @@
 		<img src="<?=$base_url.$image['path']?>" alt="camagru" />
 		<div class="actions">
 			<ul>
-				<li id="del"><i class="fa fa-trash"></i></li>
-				<li id="comment"></i>
+				<?=($_SESSION['id'] == $image['id_user']) ? '<li id="del"><i class="fa fa-trash"></i></li>' : '';?>
+				<li id="comment"><i class="fa fa-comments"></i></i>
 			</ul>
 		</div>
 	</div><!--

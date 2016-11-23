@@ -116,4 +116,18 @@ Class Galery
 				echo FALSE;
 		}
 	}
+
+	public function add_comment()
+	{
+		require_once('models/galery_model.php');
+		global $galery_model;
+		global $base_url;
+
+		if (!$_SESSION['connect'])
+		{
+			Login::index();
+			exit;
+		}
+
+	}
 }

@@ -56,7 +56,6 @@ Class Users_model
 	function update_infos($id, $email, $lname, $fname)
 	{
 		require('config/db_connect.php');
-		$key = uniqid();
 		$sql = "UPDATE db_camagru.users SET lname = :lname, fname = :fname, email = :email WHERE id = :id";
 		try {
 			$query = $pdo->prepare($sql);
@@ -81,6 +80,33 @@ Class Users_model
 			$result = $query->fetch(PDO::FETCH_ASSOC);
 		} catch (PDOException $e) {
 				echo "Problème dans la requête: " . $e->getMessage();
+		}
+		return ($result);
+	}
+
+	function get_user_by_id($id)
+	{
+		require_once('config/db_connect.php');
+		$sql = "SELECT * FROM users WHERE id=:id";
+		try {
+			$query = $pdo->prepare($sql);
+			$query->execute(array('id' => $id));
+			$result = $query->fetch(PDO::FETCH_ASSOC);
+		} catch (PDOException $e) {
+				echo "Problème dans la requête: " . $e->getMessage();
+		}
+		return ($result);
+	}
+
+	function valid_user($id)
+	{
+		require('config/db_connect.php');
+		$sql = "UPDATE db_camagru.users SET valid=:valid WHERE id=:id";
+		try {
+			$query = $pdo->prepare($sql);
+			$result = $query->execute(array('id' => $id, 'valid' => 'yes'));
+		} catch (PDOException $e) {
+			echo "Problème dans la requête: " . $e->getMessage();
 		}
 		return ($result);
 	}	
