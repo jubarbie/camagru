@@ -1,7 +1,7 @@
 <?php
 $DB_DSN = 'mysql:host=localhost';
 $DB_USER = 'jubarbie';
-$DB_PASSWORD = 'cS[No8]M';
+$DB_PASSWORD = '';
 $DB_NAME = 'db_camagru';
 $DB_OPTIONS = array(
  		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

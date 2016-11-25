@@ -158,3 +158,9 @@ nav li#logout {
 }
 
 .page-num-current { background: #ED254E; }
+
+#new-comment {
+	width: 100%;
+	max-width: 100%;
+	height: 60px;
+}

@@ -4,7 +4,7 @@ Class Comments_model
 	function add_comment($id_img, $id_user, $comment)
 	{
 		require('config/db_connect.php');
-		$sql = "INSERT INTO commentss (id_img, im_user, text, date_ajout) 							VALUES (:id_img, :id_user, :comment, NOW())";
+		$sql = "INSERT INTO comments (id_img, id_user, text, date_ajout) 							VALUES (:id_img, :id_user, :comment, NOW())";
 		try {
 			$query = $pdo->prepare($sql);
 			$result = $query->execute(array(
@@ -29,6 +29,20 @@ Class Comments_model
 		}
 		return ($result);
 	}
+
+	function delete_all_comments_from_img($id_img)
+	{
+		require('config/db_connect.php');
+		$sql = "DELETE FROM comments WHERE id_img=:id_img";
+		try {
+			$query = $pdo->prepare($sql);
+			$result = $query->execute(array('id_img' => $id_img));
+		} catch (PDOException $e) {
+			echo "Problème dans la requête: " . $e->getMessage();
+		}
+		return ($result);
+	}
+
 
 	function get_image_comments($id_img)
 	{
