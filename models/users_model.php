@@ -69,6 +69,21 @@ Class Users_model
 		}
 		return ($result);
 	}
+	
+	function update_pwd($id, $pwd)
+	{
+		require('config/db_connect.php');
+		$sql = "UPDATE db_camagru.users SET pwd=:pwd WHERE id = :id";
+		try {
+			$query = $pdo->prepare($sql);
+			$result = $query->execute(array(
+				'id' => $id,
+				'pwd' => $pwd));
+		} catch (PDOException $e) {
+			echo "Problème dans la requête: " . $e->getMessage();
+		}
+		return ($result);
+	}
 
 	function get_user_by_login($login)
 	{

@@ -33,10 +33,36 @@ Class Login
 			}
 		}
 	}
+	
+	public function reset_pwd() 
+	{
+		global $users_model;
+		global $base_url;
+
+		if (!$_POST['submit'] || !$_POST['login'])
+			include('views/reset_pwd_view.php');
+		else
+		{
+			$login = $_POST['login'];
+			$user = $users_model->get_user_by_login($login);
+			if ($user['login'] == $login)
+			{
+				$alert['type'] = 'success';
+				$alert['msg'] = 'Nous t\'avons envoyé un email';
+				include('views/login_view.php');
+			}
+			else
+			{
+				$alert['type'] = 'danger';
+				$alert['msg'] = 'Login incorrect';
+				include('views/reset_pwd_view.php');
+			}
+		}
+	}
 
 	public function check_pwd($pwd)
 	{
-		if (preg_match("/^(?=.*[A-Z])(?=.*[0-9]).{6,}$/", $pwd))
+		if (preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$/", $pwd))
 			return hash('whirlpool', $pwd);
 		else
 			return (FALSE);

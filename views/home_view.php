@@ -1,44 +1,36 @@
 <div class="container">
-<h1>Accueil</h1>
-
-<div class="content">
-	<div id="cam">
-		<video autoplay></video>
-		<button onclick="take_picture()"><i class="fa fa-camera" aria-hidden="true"></i></button>
-		<button onclick="remove_images()"><i class="fa fa-close" aria-hidden="true"></i></button>
-	</div>
-
-		<fieldset style="width: 640px; display: none;">
-			<legend>Photo</legend>
-			<img src="about:blank" alt="Photo" title="Photo" />
-		</fieldset>
-		<canvas style="display: none;" width="640" height="480"></canvas>
-	<div>
-		<h2>Dernières images</h2>
-		<div id="galery">
-			<ul id="gal-list">
-			<?php foreach ($last as $img) {
-			echo '<li><img class="gal-img" src="'.$base_url.$img['path'].'" /></li>';
-			}?>		
-			</ul>
+	<div class="side side-left">
+		<ul>
+		<?php foreach ($frames as $frame) {
+			echo '<li><img class="frame-add" onclick="add_frame(this)" src="'.$base_url.'assets/img/frames/'.$frame.'" /></li>';
+		}?>
+		</ul>
+	</div><!--
+	--><div class="content">
+		<div id="cam">
+			<video autoplay style="height: 480px; background: black; width: 640px;"></video>
+			<button id="take-photo" onclick="take_picture()"><i class="fa fa-camera" aria-hidden="true"></i></button>
+			<button id="clear" onclick="remove_images()"><i class="fa fa-close" aria-hidden="true"></i></button>
 		</div>
+	
+		<canvas style="display: none;" width="640" height="480"></canvas>
+		<div>
+			<div id="galery">
+				<ul id="gal-list">
+				<?php foreach ($last as $img) {
+				echo '<li><img class="gal-img" src="'.$base_url.$img['path'].'" /></li>';
+				}?>		
+				</ul>
+			</div>
+		</div>
+	</div><!--
+	--><div class="side side-right">
+		<ul>
+		<?php foreach ($stickers as $sticker) {
+			echo '<li><img class="img-add" onclick="add_sticker(this)" src="'.$base_url.'assets/img/stickers/'.$sticker.'" /></li>';
+		}?>
+		</ul>
 	</div>
-</div><!--
-
---><div class="side">
-	<h2>Cadres</h2>
-	<ul>
-	<?php foreach ($frames as $frame) {
-		echo '<li><img class="frame-add" onclick="add_frame(this)" src="'.$base_url.'assets/img/frames/'.$frame.'" /></li>';
-	}?>
-	</ul>
-
-	<h2>Stickers</h2>
-	<ul>
-	<?php foreach ($stickers as $sticker) {
-		echo '<li><img class="img-add" onclick="add_sticker(this)" src="'.$base_url.'assets/img/stickers/'.$sticker.'" /></li>';
-	}?>
-	</ul>
 </div>
 
 <script type="text/javascript">
@@ -168,8 +160,8 @@ function mouseDown() {
 
 function divMove(e){
 	var div = document.getElementById('img-vid');
-	var left = (document.getElementById('cam').offsetWidth - 640);
-	var top = (document.getElementById('cam').offsetHeight - 400);
+	var left = document.getElementById('img-vid').offsetWidth;
+	var top = document.getElementById('img-vid').offsetHeight;
 		div.style.position = 'absolute';
 		div.style.top = e.clientY - top + 'px';
 		div.style.left = e.clientX - left + 'px';

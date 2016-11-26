@@ -12,13 +12,12 @@
 	</header>
 	<div class="container">
 		<?= ($alert) ? '<div class="alert alert-'.$alert['type'].'">'.$alert['msg'].'</div>':''?>
-		<form id="login" action="/camagru/login/index" method="post">
-			<h1>Connection</h1>
+		<form id="login" action="<?=$base_url?>login/reset_pwd" method="post">
+			<h1>Réinitialisation du mot de passe</h1>
+			<p>Tape ton mot de passe et nous t'enverrons un email avec un nouveau mot de passe</p>
 			<label for="login">Login</label>
 			<input type="text" id="login" name="login" value="<?=$login ? $login : ""?>" />
-			<label for="pwd">Mot de passe</label>
-			<input type="password" id="pwd" name="pwd" />
-			<input type="submit" name="submit" value="Se connecter" />
+			<input type="submit" name="submit" value="Valider" />
 		</form>
 		<div class="align-center">Nouveau? <a href="<?=$base_url?>login/subscribe">Inscription</a></div>
 		<div class="align-center"><small><a href="<?=$base_url?>login/reset_pwd">Mot de passe oublié ?</a></small></div>

@@ -1,6 +1,5 @@
 <div class="container">
 <div id="galery">
-<h1>Gallerie</h1>
 <?php
 if ($images)
 {

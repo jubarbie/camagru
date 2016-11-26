@@ -1,31 +1,29 @@
 <div class="container">
-	<div class="content">
-		<img src="<?=$base_url.$image['path']?>" alt="camagru" />
-		<div class="actions">
-			<ul>
-				<?=($_SESSION['id'] == $image['id_user']) ? '<li id="del-btn" onclick="delete_img('.$_SESSION['id'].', '.$image['id'].')"><i class="fa fa-trash"></i></li>' : '';?>
-				<li id="comment-btn"><i class="fa fa-comments"></i></i>
-			</ul>
+	<div class="side side-left">
+		<div id="side-galery">
+		<ul>
+<?php foreach($galery as $img) {
+	echo '<li><a href="'.$base_url.'galery/photo/'.$img['id'].'"><img class="gal-img" src="/camagru/'.$img['path'].'" alt="'.$img['name'].'" /></a></li>';
+}?>
+		</ul>
 		</div>
+	</div><!--
+	--><div class="content">
+		<img src="<?=$base_url.$image['path']?>" alt="camagru" />
+		<?=($_SESSION['id'] == $image['id_user']) ? '<li id="del-btn" onclick="delete_img('.$_SESSION['id'].', '.$image['id'].')"><i class="fa fa-trash"></i></li>' : '';?>
+		<? if ($_SESSION['valid'] == 'yes') {?>
 		<div id="new-com">
 			<label for="new-comment">Commentaire</label>
 			<textarea id="new-comment" name="comment-text"></textarea>
 			<button id="add-comment" onclick="add_comment(<?=$image['id']?>, <?=$_SESSION['id']?>)">Ajouter</button>
 		</div>
+		<?php }?>
+	</div><!--
+	--><div class="side side-right">
 		<div id="comments">
 			<?php foreach ($comments as $comment) {
 				echo '<p>'.$comment['text'].'</p>';
 			}?>
-		</div>
-	</div><!--
-	--><div class="side">
-		<h2>Gallerie</h2>
-		<div id="galery">
-		<ul>
-<?php foreach($galery as $img) {
-	echo '<li><a href="'.$base_url.'galery/photo/'.$img['id'].'"><img class="gal-img" src="/camagru/'.$img['path'].'" alt="'.$img['name'].'" /></li>';
-}?>
-		</ul>
 		</div>
 	</div>
 </div>

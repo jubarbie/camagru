@@ -3,10 +3,13 @@
 <head>
 	<meta charset="utf-8">
 	<title>Camagru - Inscription</title>
-	<link rel="stylesheet" type="text/css" href="/camagru/assets/css/style.css?<?=time()?>">
+	<link rel="stylesheet" type="text/css" href="<?=$base_url?>assets/css/style.css?<?=time()?>">
 </head>
 
 <body>
+	<header style="margin-top: 100px;">
+		<img src="<?=$base_url?>assets/img/logo.jpg" width="310" alt="CAMAGRU" />
+	</header>
 	<div class="container">
 		<?= ($alert) ? '<div class="alert alert-'.$alert['type'].'">'.$alert['msg'].'</div>':''?>
 		<form id="login" action="/camagru/login/subscribe" method="post">
@@ -23,7 +26,7 @@
 			<input type="text" id="email" name="email" value="<?=$email ? $email : ""?>"/>
 			<input type="submit" name="submit" value="S'inscrire" />
 		</form>
-		<div class="align-center">Déjà inscrit ? <a href="/camagru/login">Se connecter</a></div>
+		<div class="align-center">Déjà inscrit ? <a href="<?=$base_url?>login">Se connecter</a></div>
 	</div>
 </body>
 </html>
