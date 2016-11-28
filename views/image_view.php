@@ -9,10 +9,10 @@
 		</div>
 	</div><!--
 	--><div class="content">
-		<img src="<?=$base_url.$image['path']?>" alt="camagru" />
-		<?=($_SESSION['id'] == $image['id_user']) ? '<li id="del-btn" onclick="delete_img('.$_SESSION['id'].', '.$image['id'].')"><i class="fa fa-trash"></i></li>' : '';?>
+		<img class="img-border" src="<?=$base_url.$image['path']?>" alt="camagru" />
+		
 		<? if ($_SESSION['valid'] == 'yes') {?>
-		<div id="new-com">
+		<div id="btn-cam" style="margin-top: -10px;">
 			<label for="new-comment">Commentaire</label>
 			<textarea id="new-comment" name="comment-text"></textarea>
 			<button id="add-comment" onclick="add_comment(<?=$image['id']?>, <?=$_SESSION['id']?>)">Ajouter</button>
@@ -20,10 +20,11 @@
 		<?php }?>
 	</div><!--
 	--><div class="side side-right">
+		<?=($_SESSION['id'] == $image['id_user']) ? '<li id="del-btn" onclick="delete_img('.$_SESSION['id'].', '.$image['id'].')"><i class="fa fa-trash"></i></li>' : '';?>
 		<div id="comments">
-			<?php foreach ($comments as $comment) {
-				echo '<p>'.$comment['text'].'</p>';
-			}?>
+		<?php foreach ($comments as $comment) {
+			echo '<p>'.$comment['text'].'</p>';
+		}?>
 		</div>
 	</div>
 </div>

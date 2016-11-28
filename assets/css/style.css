@@ -17,11 +17,27 @@ body {
 	background: #0B6E4F;
 	box-sizing: border-box;
 }
+::-webkit-scrollbar {
+	background-color: #0B6E4F;
+}
+::-webkit-scrollbar-thumb {
+	background-color: #004932;
+	width: 8px;
+	border-radius: 7px;
+}
+/*::-webkit-scrollbar {
+	width: 14px;
+	height: 14px;
+	background: #0B6E4F;
+}*/
 header {
 	text-align: center;
 }
 #head {
+	position: relative;
 	margin-top: 30px;
+	z-index: 100000;
+	background: #0B6E4F;
 }
 #head li {
 	position: relative;
@@ -66,7 +82,8 @@ li {
 	text-align: center;
 }
 .container {
-	width: 1270px;
+	max-width: 1270px;
+	min-width: 940px;
 	margin: 0 auto;
 	padding: 0;
 	box-sizing: border-box;
@@ -86,7 +103,12 @@ li {
 	width: 150px;
 	box-sizing: border-box;
 	vertical-align: top;
+	position: relative;
+	z-index: 10000;
+	background: #0B6E4F;
+	height: 555px;
 }
+
 .side-left {
 	text-align: right;	
 }
@@ -95,8 +117,13 @@ li {
 }
 .side ul 
 {
-	height: 420px;
-	overflow-y: scroll;
+	height: 535px;
+	overflow-y: auto;
+}
+.gr-bg {
+	background: #0B6E4F;
+	position: relative;
+	z-index: 10000;
 }
 a { color: #06B17C; text-decoration: none; }
 a:hover { color: #C2EABD; }
@@ -153,11 +180,20 @@ h2 {
 /* CAMERA */
 
 #cam { position: relative; text-align: center;}
-#cam button {
-	z-index: 10000;
+#btn-cam {
+	background: #004932;
+	padding: 10px 0;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+	margin-top: -5px;
+	border: 5px solid #004932;
+	box-sizing: border-box;
 }
 video {
-	border-radius: 5px;
+	border: 5px solid #004932; 
+	box-sizing: border-box;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
 	margin: 0 auto;
 	display: block;
 	z-index: 10 !important;
@@ -168,8 +204,6 @@ video {
 	font-size: 20px;
 	border-radius: 15px;
 	border: none;
-	margin-top: 10px;
-	z-index: 10000 !important;
 	background: #721817;
 	cursor: pointer;
 }
@@ -178,19 +212,30 @@ video {
 	height: 60px;
 	font-size: 20px;
 	border-radius: 30px;
-	margin-top: 10px;
-	z-index: 10000 !important;
-	background: #06B17C;
+	background: #003a28;
 	border: none;
 	cursor: pointer;
 }
+button:focus {outline: 0}
 .img-add, .frame-add { width: 100%; cursor: pointer; }
-
+#prev-img {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+#load-img { 
+	display: none; 
+	position: absolute;
+	top: 0;
+	left: 0;
+}
 nav {
 	box-sizing: border-box;
 	position: fixed;
 	top: 0px;
 	right: 10px;
+	font-size: 1.2em;
 }
 nav li a {
 	text-decoration: none;
@@ -238,6 +283,10 @@ nav li a {
 	width: 100%;
 	max-width: 100%;
 	height: 60px;
+	border-radius: 5px;
+	border: none;
+	box-sizing: border-box;
+	color: #003a28;
 }
 
 #del-btn {
@@ -248,9 +297,23 @@ nav li a {
 	line-height: 30px;
 	cursor: pointer;
 	background: #721817;
+	text-align: center;
+	color: black;
 }
 
 #footer {
 	margin-top: 50px;
 	border-top: 1px solid #004932;
+}
+
+#prev-img, #frame-vid, .img-border {
+	border-radius: 5px;
+}
+
+#frame-vid, .img-border {
+	border: 5px solid #004932;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	box-sizing: border-box;
+	width: 640px;
 }

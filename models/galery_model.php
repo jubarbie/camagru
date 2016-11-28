@@ -15,7 +15,7 @@ Class Galery_model
 		} catch (PDOException $e) {
 			echo "Problème dans la requête: " . $e->getMessage();
 		}
-		return ($result);
+		return ($pdo->lastInsertId());
 	}
 
 	function delete_image($id)
@@ -66,7 +66,7 @@ Class Galery_model
 	function get_all_images()
 	{
 		require('config/db_connect.php');
-		$sql = "SELECT * FROM images";
+		$sql = "SELECT * FROM images ORDER BY date_ajout DESC";
 		try {
 			$query = $pdo->prepare($sql);
 			$query->execute();
@@ -81,7 +81,7 @@ Class Galery_model
 	function get_images_from_user($id_user, $limit = NULL)
 	{
 		require('config/db_connect.php');
-		$sql = "SELECT * FROM images WHERE id_user = :id_user ORDER BY date_ajout DESC LIMIT 10 ";
+		$sql = "SELECT * FROM images WHERE id_user = :id_user ORDER BY date_ajout DESC LIMIT 8";
 		try {
 			$query = $pdo->prepare($sql);
 			$query->execute(array('id_user' => $id_user));

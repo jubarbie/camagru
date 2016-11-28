@@ -115,7 +115,7 @@ Class Galery
 			$img = str_replace(' ', '+', $img);
 			$data = base64_decode($img);
 			file_put_contents($url, $data);
-			if ($galery_model->add_image($name, 'png', $url, $_SESSION['id']))
+			if ($id = $galery_model->add_image($name, 'png', $url, $_SESSION['id']))
 			{
 				if ($_POST['stk'] != 'null')
 				{
@@ -127,7 +127,8 @@ Class Galery
 					$url_src = 'assets/img/frames/'.$_POST['fr'];
 					Galery::merge_images($url, $url_src, 0, 0);
 				}
-				echo $base_url.$url;
+				echo '<a href="'.$base_url.'galery/photo/'.$id.'"><img class="gal-img" src="'.$base_url.$url.'" /></a>';
+				//echo $base_url.$url;
 			}
 			else
 				echo FALSE;

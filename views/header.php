@@ -10,7 +10,7 @@
 
 <body>
 
-<header>
+<header class="gr-bg">
 	<?= ($alert) ? "<div class='alert alert-".$alert['type']."'>".$alert['msg']."</div>" : ""?>
 	<div class="container">
 		<nav>

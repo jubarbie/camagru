@@ -16,14 +16,16 @@
 			<h1>Inscription</h1>
 			<label for="login">Login</label>
 			<input type="text" id="login" name="login" value="<?=$login ? $login : ""?>" />
-			<label for="pwd">Mot de passe</label>
-			<input type="password" id="pwd" name="pwd" />
 			<label for="lname">Nom</label>
 			<input type="text" id="lname" name="lname" value="<?=$lname ? $lname : ""?>" />
 			<label for="fname">Prénom</label>
 			<input type="text" id="fname" name="fname" value="<?=$fname ? $fname : ""?>"/>
 			<label for="email">Email</label>
 			<input type="text" id="email" name="email" value="<?=$email ? $email : ""?>"/>
+			<label for="pwd">mot de passe</label>
+			<input type="password" id="pwd" name="pwd" />
+			<label for="re-pwd">Retaper le mot de passe</label>
+			<input type="password" id="re-pwd" name="re-pwd" />
 			<input type="submit" name="submit" value="S'inscrire" />
 		</form>
 		<div class="align-center">Déjà inscrit ? <a href="<?=$base_url?>login">Se connecter</a></div>

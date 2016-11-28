@@ -47,6 +47,10 @@ Class Login
 			$user = $users_model->get_user_by_login($login);
 			if ($user['login'] == $login)
 			{
+				$pwd = uniqid();
+				$users_model->update_pwd($user['id'], hash('whirlpool', $pwd));
+				$msg = "Voici votre nouveau mot de passe: " . $pwd;
+				mail($user['email'], "Camagru - Réinitialisation du mot de passe", $msg);
 				$alert['type'] = 'success';
 				$alert['msg'] = 'Nous t\'avons envoyé un email';
 				include('views/login_view.php');
@@ -139,10 +143,11 @@ Class Login
 		{
 			$login = $_POST['login'];
 			$pwd = $_POST['pwd'];
+			$repwd = $_POST['re-pwd'];
 			$lname = $_POST['lname'];
 			$fname = $_POST['fname'];
 			$email = $_POST['email'];
-			if (!$login || !$pwd || !$lname || !$fname || !$email)
+			if (!$login || !$pwd || !$lname || !$fname || !$email || !$repwd)
 			{
 				$alert['type'] = 'danger';
 				$alert['msg'] = 'Tous les champs sont requis';
@@ -150,6 +155,11 @@ Class Login
 			}
 			else
 			{
+				if ($pwd != $repwd)
+				{
+					$alert['type'] = 'danger';
+					$alert['msg'] = 'Les deux mots de passe ne sont pas identiques';
+				}
 				if (!($pwd = Login::check_pwd($pwd)))
 				{
 					$alert['type'] = 'danger';
@@ -160,7 +170,7 @@ Class Login
 					$alert['type'] = 'danger';
 					$alert['msg'] = 'L\'email n\'est pas valide';
 				}
-				if ($login && $pwd && $lname && $fname && $email)
+								if ($login && $pwd && $lname && $fname && $email)
 				{
 					if ($result = $users_model->get_user_by_login($login))
 					{
