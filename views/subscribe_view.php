@@ -11,9 +11,9 @@
 		<img src="<?=$base_url?>assets/img/logo.jpg" width="310" alt="CAMAGRU" />
 	</header>
 	<div class="container">
-		<?= ($alert) ? '<div class="alert alert-'.$alert['type'].'">'.$alert['msg'].'</div>':''?>
 		<form id="login" action="/camagru/login/subscribe" method="post">
 			<h1>Inscription</h1>
+			<?= ($alert) ? '<div class="alert alert-'.$alert['type'].'">'.$alert['msg'].'</div>':''?>
 			<label for="login">Login</label>
 			<input type="text" id="login" name="login" value="<?=$login ? $login : ""?>" />
 			<label for="lname">Nom</label>
@@ -22,7 +22,7 @@
 			<input type="text" id="fname" name="fname" value="<?=$fname ? $fname : ""?>"/>
 			<label for="email">Email</label>
 			<input type="text" id="email" name="email" value="<?=$email ? $email : ""?>"/>
-			<label for="pwd">mot de passe</label>
+			<label for="pwd">Mot de passe</label>
 			<input type="password" id="pwd" name="pwd" />
 			<label for="re-pwd">Retaper le mot de passe</label>
 			<input type="password" id="re-pwd" name="re-pwd" />

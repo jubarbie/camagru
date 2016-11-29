@@ -72,6 +72,14 @@ Class Login
 			return (FALSE);
 	}
 
+	public function only_alphanum($str)
+	{
+		if (preg_match("/^\w+$/", $str))
+			return (TRUE);
+		else
+			return (FALSE);
+	}
+
 	public function send_confirm_email($email, $id, $key)
 	{
 		global $base_url;
@@ -155,48 +163,49 @@ Class Login
 			}
 			else
 			{
-				if ($pwd != $repwd)
+				if (!Login::only_alphanum($login) || !Login::only_alphanum($lname) ||!Login::only_alphanum($fname))
 				{
 					$alert['type'] = 'danger';
-					$alert['msg'] = 'Les deux mots de passe ne sont pas identiques';
+					$alert['msg'] = 'Seuls les caractères alpanumériques sont autorisés pour le login, le nom et le prénom';
+					include('views/subscribe_view.php');
 				}
-				if (!($pwd = Login::check_pwd($pwd)))
+				else if ($result = $users_model->get_user_by_login($login))
 				{
 					$alert['type'] = 'danger';
-					$alert['msg'] = 'Le mot de passe n\'est pas assez fort';
+					$alert['msg'] = 'Le login est déjà utilisé';
+					include('views/subscribe_view.php');
 				}
-				if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+				else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
 				{
 					$alert['type'] = 'danger';
 					$alert['msg'] = 'L\'email n\'est pas valide';
-				}
-								if ($login && $pwd && $lname && $fname && $email)
+					include('views/subscribe_view.php');
+				} 
+				else if (!($h_pwd = Login::check_pwd($pwd)))
 				{
-					if ($result = $users_model->get_user_by_login($login))
-					{
-						$alert['type'] = 'danger';
-						$alert['msg'] = 'Le login est déjà utilisé';
-						include('views/subscribe_view.php');
-					}
-					else
-					{
-						if ($result = $users_model->add_user($login, $pwd, $email, $lname, $fname))
-						{
-							Login::send_confirm_email($email, $result['id'], $result['key']);
-							$alert['type'] = 'success';
-							$alert['msg'] = 'Vous avez bien été inscrit, vérifiez votre boîte mail';
-							include('views/login_view.php');
-						}
-						else
-						{
-							$alert['type'] = 'danger';
-							$alert['msg'] = 'Un problème est survenu';
-							include('views/subscribe_view.php');
-						}
-					}
+					$alert['type'] = 'danger';
+					$alert['msg'] = 'Le mot de passe n\'est pas assez fort<br>6 caractères alphanumériques min.<br>Au moins une lettre capitale<br>Au moins un chiffre';
+					include('views/subscribe_view.php');
+				}
+				else if ($pwd != $repwd)
+				{
+					$alert['type'] = 'danger';
+					$alert['msg'] = 'Les deux mots de passe ne sont pas identiques';
+					include('views/subscribe_view.php');
+				}					
+				else if ($result = $users_model->add_user($login, $h_pwd, $email, $lname, $fname))
+				{
+					Login::send_confirm_email($email, $result['id'], $result['key']);
+					$alert['type'] = 'success';
+					$alert['msg'] = 'Tu es inscrit, vérifie ta boîte mail';
+					include('views/login_view.php');
 				}
 				else
+				{
+					$alert['type'] = 'danger';
+					$alert['msg'] = 'Un problème est survenu nors de la requête';
 					include('views/subscribe_view.php');
+				}
 			}
 		}
 	}

@@ -23,7 +23,7 @@
 	
 	<div class="container">
 		<div class="content" id="head">
-			<img src="<?=$base_url?>assets/img/logo.jpg" alt="Camagru" width="200" />
+			<a href="<?=$base_url?>"><img src="<?=$base_url?>assets/img/logo.jpg" alt="Camagru" width="200" /></a>
 			<ul class="inline-block pull-right">
 				<li id="menu-photo"><a href="<?=$base_url?>"></a></li>
 				<li id="menu-gal"><a href="<?=$base_url?>galery/page/1"></a></li>

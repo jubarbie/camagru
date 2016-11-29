@@ -7,6 +7,12 @@ try {
 	die();
 }
 
+$files = glob('upload/*'); // get all file names
+foreach($files as $file){ // iterate files
+	  if(is_file($file))
+		      unlink($file); // delete file
+}
+
 $sql = '
 	DROP DATABASE IF EXISTS db_camagru;
 	CREATE DATABASE IF NOT EXISTS ' . $DB_NAME;
@@ -45,9 +51,13 @@ $sql = 'CREATE TABLE users (
 		CREATE TABLE comments (
 			id INT PRIMARY KEY AUTO_INCREMENT,
 			id_img INT,
-			id_user INT,
-			text VARCHAR(255),
-			date_ajout DATETIME);';
+			user VARCHAR(255),
+			text VARCHAR(500),
+			date_ajout DATETIME);
+		CREATE TABLE likes (
+			id INT PRIMARY KEY AUTO_INCREMENT,
+			id_img INT,
+			id_user INT);';
 try {
 	$dbh->query($sql);
 } catch (PDOException $e) {

@@ -20,7 +20,8 @@ else
 {
 	if (!class_exists($url[2]))
 	{
-		header("HTTP/1.1 404 Not Found");
+		header("HTTP/1.0 404 Not Found");
+		require ('views/404_view.php');
 		exit;
 	}
 	else
@@ -31,7 +32,8 @@ else
 				call_user_func(array($url[2], $url[3]), $url[4]);
 			else
 			{
-				header("HTTP/1.1 404 Not Found");
+				header("HTTP/1.0 404 Not Found");
+				require ('views/404_view.php');
 				exit;
 			}
 		}

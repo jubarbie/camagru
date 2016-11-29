@@ -6,12 +6,12 @@
 			}?>
 		</ul>
 	</div><!--
-	--><div class="content" style="height: 480px !important;">
+	--><div class="content">
 		<div id="cam">
 			<video autoplay style="height: 480px; background: black; width: 640px;"></video>
 			<div id="load-img" class="align-center">
-				<p>La vidéo semble désactivée. Tu peux télécharger une image</p>
-				<input type="file" onchange="previewFile()" />
+				<p class="align-center">La vidéo semble désactivée. Tu peux télécharger une image</p>
+				<input type="file" onchange="previewFile()" accept="image/*" />
 			</div>
 			<img id="prev-img" src="" width="640" height="480" alt="Image preview..." draggable="false">
 			<canvas style="display: none;" width="640" height="480"></canvas>
@@ -130,8 +130,10 @@
 				li.innerHTML = xhr.responseText;
 				ul.insertBefore(li, ul.childNodes[0]);
 				console.log('image added' + xhr.responseText);
-				if (ul.children.length > 12)
+				while (ul.children.length > 8)
+				{
 					ul.lastChild.remove();
+				}
 			}
 			else if (xhr.status !== 200) {
 				alert('Request failed.  Returned status of ' + xhr.status);

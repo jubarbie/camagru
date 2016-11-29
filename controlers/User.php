@@ -36,7 +36,16 @@ Class User
 			}
 			else
 			{
-				if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+				if (!Login::only_alphanum($_POST['lname']) ||!Login::only_alphanum($_POST['fname']))
+				{
+					$alert['type'] = 'danger';
+					$alert['msg'] = 'Seuls les caractères alpanumériques sont autorisés pour le nom et le prénom';
+					include ('views/header.php');
+					include ('views/profile_view.php');
+					include ('views/footer.php');
+;
+				}
+				else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
 				{
 					$alert['type'] = 'danger';
 					$alert['msg'] = 'L\'email n\'est pas valide';

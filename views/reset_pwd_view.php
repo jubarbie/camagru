@@ -14,7 +14,7 @@
 		<?= ($alert) ? '<div class="alert alert-'.$alert['type'].'">'.$alert['msg'].'</div>':''?>
 		<form id="login" action="<?=$base_url?>login/reset_pwd" method="post">
 			<h1>Réinitialisation du mot de passe</h1>
-			<p>Tape ton mot de passe et nous t'enverrons un email avec un nouveau mot de passe</p>
+			<p>Tape ton login et nous t'enverrons un email avec un nouveau mot de passe</p>
 			<label for="login">Login</label>
 			<input type="text" id="login" name="login" value="<?=$login ? $login : ""?>" />
 			<input type="submit" name="submit" value="Valider" />

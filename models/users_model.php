@@ -4,10 +4,10 @@ Class Users_model
 	function login($login, $pwd)
 	{
 		require_once('config/db_connect.php');
-		$sql = sprintf("SELECT * FROM db_camagru.users WHERE login = '%s'", $login);
+		$sql = sprintf("SELECT * FROM db_camagru.users WHERE login = :login");
 		try {
 			$query = $pdo->prepare($sql);
-			$query->execute();
+			$query->execute(array('login' => $login));
 			$result = $query->fetchAll();
 		} catch (PDOException $e) {
 			echo "Problème dans la requête" . $e->getMessage();
@@ -87,7 +87,7 @@ Class Users_model
 
 	function get_user_by_login($login)
 	{
-		require_once('config/db_connect.php');
+		require('config/db_connect.php');
 		$sql = "SELECT * FROM users WHERE login=:login";
 		try {
 			$query = $pdo->prepare($sql);
@@ -101,7 +101,7 @@ Class Users_model
 
 	function get_user_by_id($id)
 	{
-		require_once('config/db_connect.php');
+		require('config/db_connect.php');
 		$sql = "SELECT * FROM users WHERE id=:id";
 		try {
 			$query = $pdo->prepare($sql);

@@ -24,7 +24,9 @@ Class Galery
 	{
 		require_once('models/galery_model.php');
 		require_once('models/comments_model.php');
+		require_once('models/likes_model.php');
 		global $galery_model;
+		global $likes_model;
 		global $comments_model;
 		global $base_url;
 
@@ -38,6 +40,8 @@ Class Galery
 		else
 		{
 			$image = $image[0];
+			$likes = $likes_model->get_img_likes($id);
+			$liked = $likes_model->is_liked($_SESSION['id'], $id);
 			$galery = $galery_model->get_all_images();
 			$comments = $comments_model->get_image_comments($id);
 			include ('views/header.php');
@@ -134,6 +138,32 @@ Class Galery
 				echo FALSE;
 		}
 	}
+
+	public function like_img()
+	{
+		require_once('models/galery_model.php');
+		require_once('models/likes_model.php');
+		global $galery_model;
+		global $likes_model;
+		global $base_url;
+
+		if (!$_SESSION['connect'])
+		{
+			Login::index();
+			exit;
+		}
+		if ($_POST['img'] && $_SESSION['id'])
+		{
+			if ($img = $galery_model->get_image($_POST['img']))
+			{
+				if (($like = $likes_model->is_liked($_SESSION['id'], $_POST['img'])))
+					$likes_model->remove_like($_POST['img'], $_SESSION['id']);
+				else
+					$likes_model->add_like($_POST['img'], $_SESSION['id']);
+			}
+		}
+		echo $likes_model->get_img_likes($_POST['img']);
+	}
 	
 	public function add_comment()
 	{
@@ -152,11 +182,12 @@ Class Galery
 		}
 		if (($text = $_POST['comment']))
 		{
-			$comments_model->add_comment($_POST['img'], $_POST['usr'], $text);
+			$id = $comments_model->add_comment($_POST['img'], $_POST['usr'], $text);
 			$img = $galery_model->get_image($_POST['img']);
-			$usr = $users_model->get_user($img['id_user']);
+			$usr = $users_model->get_user_by_id($img['id_user']);
 			mail($usr['email'], "Camagru - commentaire", "Une de vos photo vient d'être commentée par un de nos utilisateur");
-			echo $text;
+			$comment = $comments_model->get_comment($id);
+			echo json_encode($comment[0]);
 		}
 		else
 			echo 'FALSE';

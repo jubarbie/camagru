@@ -60,8 +60,22 @@ Class Galery_model
 				echo "Problème dans la requête: " . $e->getMessage();
 		}
 		return ($result['total']);
-
 	}
+
+	function add_like($id)
+	{
+		require('config/db_connect.php');
+		$sql = "UPDATE images SET likes=likes+1 WHERE id=:id";
+		try
+		{
+			$query = $pdo->prepare($sql);
+			$result = $query->execute(array('id' => $id));
+		} catch (PDOException $e) {
+				echo "Problème dans la requête: " . $e->getMessage();
+		}
+		return ($result);
+	}
+
 
 	function get_all_images()
 	{
