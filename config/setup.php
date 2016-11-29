@@ -1,5 +1,5 @@
 <?php
-
+session_destroy();
 try {
 	$dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD, $DB_OPTIONS);
 } catch (PDOException $e) {

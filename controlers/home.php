@@ -1,5 +1,4 @@
 <?php
-session_start();
 Class Home 
 {
 	public function index()

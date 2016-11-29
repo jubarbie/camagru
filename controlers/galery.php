@@ -1,5 +1,4 @@
 <?php
-session_start();
 Class Galery
 {
 	public function index()

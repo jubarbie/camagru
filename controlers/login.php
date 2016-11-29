@@ -1,5 +1,4 @@
 <?php
-session_start();
 Class Login 
 {
 	function __construct() 
